@@ -26,3 +26,54 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+const words = ["suspenso?", "bloqueado?"];
+const typingText = document.getElementById("typing-text");
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let isWaiting = false;
+
+function type() {
+    const currentWord = words[wordIndex];
+    
+    if (isDeleting) {
+        // Removendo caracteres
+        typingText.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        // Adicionando caracteres
+        typingText.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    // Quando terminar de escrever a palavra
+    if (!isDeleting && charIndex === currentWord.length) {
+        isWaiting = true;
+        setTimeout(() => {
+            isDeleting = true;
+            isWaiting = false;
+        }, 2000); // Espera 2 segundos antes de começar a apagar
+    }
+
+    // Quando terminar de apagar a palavra
+    if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+    }
+
+    // Define a velocidade da digitação/apagamento
+    const typingSpeed = isDeleting ? 50 : 90;
+    
+    if (!isWaiting) {
+        setTimeout(type, typingSpeed);
+    } else {
+        setTimeout(type, 1000);
+    }
+}
+
+// Inicia o efeito quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(type, 100);
+});
