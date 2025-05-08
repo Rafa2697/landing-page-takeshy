@@ -35,16 +35,23 @@ let charIndex = 0;
 let isDeleting = false;
 let isWaiting = false;
 
+// Encontra a palavra mais longa para definir a largura
+const maxLength = Math.max(...words.map(word => word.length));
+
 function type() {
     const currentWord = words[wordIndex];
+    let displayText = currentWord.substring(0, isDeleting ? charIndex - 1 : charIndex + 1);
+    
+    // Preenche o resto do espaço com caracteres invisíveis
+    while (displayText.length < maxLength) {
+        displayText += '\u00A0';
+    }
+    
+    typingText.textContent = displayText;
     
     if (isDeleting) {
-        // Removendo caracteres
-        typingText.textContent = currentWord.substring(0, charIndex - 1);
         charIndex--;
     } else {
-        // Adicionando caracteres
-        typingText.textContent = currentWord.substring(0, charIndex + 1);
         charIndex++;
     }
 
@@ -54,7 +61,7 @@ function type() {
         setTimeout(() => {
             isDeleting = true;
             isWaiting = false;
-        }, 2000); // Espera 2 segundos antes de começar a apagar
+        }, 2000);
     }
 
     // Quando terminar de apagar a palavra
@@ -63,7 +70,6 @@ function type() {
         wordIndex = (wordIndex + 1) % words.length;
     }
 
-    // Define a velocidade da digitação/apagamento
     const typingSpeed = isDeleting ? 50 : 90;
     
     if (!isWaiting) {

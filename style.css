@@ -1,13 +1,33 @@
-*{
+* {
     box-sizing: border-box;
 }
 
- #typing-text {
-        border-right: 2px solid #666;
-        animation: blink-caret 0.75s step-end infinite;
+.typing-container {
+    display: inline-block;
+    min-width: 120px;
+}
+
+#typing-text {
+    border-right: 2px solid #666;
+    animation: blink-caret 0.75s step-end infinite;
+    white-space: pre;
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
     }
 
-    @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: #666 }
+    50% {
+        border-color: #666
     }
+}
+
+@media (max-width: 768px) {
+    .typing-container {
+        display: block;
+        margin-top: 0.5rem;
+    }
+}
