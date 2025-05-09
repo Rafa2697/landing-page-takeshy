@@ -31,3 +31,15 @@
         margin-top: 0.5rem;
     }
 }
+
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(-10px);
+}
+
+.dropdown-content.open {
+    max-height: 500px;
+    transform: translateY(0);
+}

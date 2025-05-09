@@ -1,6 +1,8 @@
 // script.js
 // Função para alternar a exibição do conteúdo FAQ
-document.addEventListener('DOMContentLoaded', function () {
+
+function toggleDropdown() {
+    document.addEventListener('DOMContentLoaded', function () {
     const faqButtons = document.querySelectorAll('.space-y-4 button');
 
     faqButtons.forEach(button => {
@@ -10,8 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Toggle visibilidade e rotação
             content.classList.toggle('hidden');
+            content.classList.toggle('opacity-0');
+            content.classList.toggle('opacity-100');
+            content.classList.toggle('max-h-0');
+            content.classList.toggle('max-h-96');
+            
+
+            // Toggle rotação do ícone
             icon.classList.toggle('transform');
             icon.classList.toggle('rotate-90');
+            
+            
 
             // Fecha outros dropdowns
             faqButtons.forEach(otherButton => {
@@ -19,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     const otherContent = otherButton.nextElementSibling;
                     const otherIcon = otherButton.querySelector('i');
 
-                    otherContent.classList.add('hidden');
+                   otherContent.classList.add('hidden', 'opacity-0', 'max-h-0');
+                    otherContent.classList.remove('opacity-100', 'max-h-96');
                     otherIcon.classList.remove('rotate-90');
                 }
             });
@@ -27,8 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+}
 
-const words = ["suspenso?", "bloqueado?"];
+
+function wordCount() {
+  const words = ["suspenso?", "bloqueado?"];
 const typingText = document.getElementById("typing-text");
 let wordIndex = 0;
 let charIndex = 0;
@@ -83,3 +98,9 @@ function type() {
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(type, 100);
 });
+    
+}
+
+
+toggleDropdown();
+wordCount();
