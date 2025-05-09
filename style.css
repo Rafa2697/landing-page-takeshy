@@ -43,3 +43,9 @@
     max-height: 500px;
     transform: translateY(0);
 }
+
+#prevBtn:disabled,
+#nextBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

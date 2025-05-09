@@ -103,30 +103,33 @@ function wordCount() {
 
 function carousel() {
     const carouselInner = document.getElementById('carouselInner');
-    const totalItems = carouselInner.children.length;
-    let visibleItems = getVisibleItems(); // calcula ao carregar
+    let visibleItems = getVisibleItems();
     let currentIndex = 0;
 
-    window.addEventListener('resize', () => { // recalcule ao redimensionar
-        // Se o número de itens visíveis mudar, atualize a posição do carrossel
+    window.addEventListener('resize', () => {
         visibleItems = getVisibleItems();
-        console.log(visibleItems);
-        updateCarousel();
+        validateAndUpdateCarousel();
     });
 
-
     document.getElementById('nextBtn').addEventListener('click', () => {
-        if (currentIndex < totalItems - visibleItems) {
+        const totalItems = carouselInner.children.length;
+        const maxIndex = totalItems - visibleItems;
+        if (currentIndex < maxIndex) {
             currentIndex++;
-            updateCarousel();
+        } else {
+            currentIndex = 0; // Volta ao início
         }
+        validateAndUpdateCarousel();
     });
 
     document.getElementById('prevBtn').addEventListener('click', () => {
+        const totalItems = carouselInner.children.length;
         if (currentIndex > 0) {
             currentIndex--;
-            updateCarousel();
+        } else {
+            currentIndex = totalItems - visibleItems; // Vai para o último conjunto
         }
+        validateAndUpdateCarousel();
     });
 
     function getVisibleItems() {
@@ -136,23 +139,56 @@ function carousel() {
         return 3;                      // desktop
     }
 
-    function updateCarousel() {
-        visibleItems = getVisibleItems();
+    function validateAndUpdateCarousel() {
         const totalItems = carouselInner.children.length;
-        // Garante que o índice não ultrapasse o máximo possível
-        if (currentIndex > totalItems - visibleItems) {
-            currentIndex = Math.max(0, totalItems - visibleItems);
-        }
-        const percentage = (100 / visibleItems) * currentIndex;
+        const maxIndex = Math.max(0, totalItems - visibleItems);
+        
+        // Garante que o índice não ultrapasse o limite máximo
+        currentIndex = Math.min(currentIndex, maxIndex);
+        
+        // Atualiza a posição do carousel considerando os itens visíveis
+        const percentage = (100 / totalItems) * currentIndex;
         carouselInner.style.transform = `translateX(-${percentage}%)`;
-        carouselInner.style.width = `${(100 / visibleItems) * totalItems}%`;
+        carouselInner.style.width = `${100 * totalItems / visibleItems}%`;
+        
         // Ajusta a largura dos cards
         Array.from(carouselInner.children).forEach(card => {
             card.style.width = `${100 / totalItems}%`;
         });
     }
-    window.addEventListener('resize', updateCarousel);
-    updateCarousel(); // Chama a função para definir a posição inicial
+
+    // Inicialização
+    validateAndUpdateCarousel();
+
+    // Rolagem automática
+    let autoScrollInterval = setInterval(() => {
+        const totalItems = carouselInner.children.length;
+        const maxIndex = totalItems - visibleItems;
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Volta ao início
+        }
+        validateAndUpdateCarousel();
+    }, 5000);
+
+    // Opcional: Parar a rolagem automática quando o mouse estiver sobre o carousel
+    document.getElementById('carousel').addEventListener('mouseenter', () => {
+        clearInterval(autoScrollInterval);
+    });
+
+    document.getElementById('carousel').addEventListener('mouseleave', () => {
+        autoScrollInterval = setInterval(() => {
+            const totalItems = carouselInner.children.length;
+            const maxIndex = totalItems - visibleItems;
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            validateAndUpdateCarousel();
+        }, 5000);
+    });
 }
 
 // ...existing code...
@@ -169,9 +205,8 @@ async function carregarReviewsFeaturable() {
 
             data.reviews.forEach(review => {
                 const card = document.createElement('div');
-                card.className = "p-2 flex-shrink-0"; // Adiciona a classe para o carrossel
                 card.innerHTML = `
-                    <div class="bg-white text-black rounded-lg shadow p-4 max-w-md mx-auto">
+                    <div class="bg-white text-black h-2/3 rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300">
                         <div class="flex items-center mb-2">
                             <span class="font-bold">${review.reviewer.displayName}</span>
                             <span class="ml-2 text-yellow-400">
