@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+
 wordCount();
 toggleDropdown();
-
