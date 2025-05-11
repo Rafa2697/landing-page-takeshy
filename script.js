@@ -2,40 +2,34 @@
 // Função para alternar a exibição do conteúdo FAQ
 
 function toggleDropdown() {
-    document.addEventListener('DOMContentLoaded', function () {
-        const faqButtons = document.querySelectorAll('.space-y-4 button');
+    document.querySelectorAll('.bg-white.rounded-lg.shadow button').forEach(button => {
+        button.addEventListener('click', () => {
+            const dropdownContent = button.nextElementSibling;
+            const icon = button.querySelector('.fas.fa-caret-right');
 
-        faqButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const content = this.nextElementSibling;
-                const icon = this.querySelector('i');
-
-                // Toggle visibilidade e rotação
-                content.classList.toggle('hidden');
-                content.classList.toggle('opacity-0');
-                content.classList.toggle('opacity-100');
-                content.classList.toggle('max-h-0');
-                content.classList.toggle('max-h-96');
-
-
-                // Toggle rotação do ícone
-                icon.classList.toggle('transform');
-                icon.classList.toggle('rotate-90');
-
-
-
-                // Fecha outros dropdowns
-                faqButtons.forEach(otherButton => {
-                    if (otherButton !== button) {
-                        const otherContent = otherButton.nextElementSibling;
-                        const otherIcon = otherButton.querySelector('i');
-
-                        otherContent.classList.add('hidden', 'opacity-0', 'max-h-0');
-                        otherContent.classList.remove('opacity-100', 'max-h-96');
-                        otherIcon.classList.remove('rotate-90');
-                    }
-                });
+            // Fecha todos os outros dropdowns
+            document.querySelectorAll('.dropdown-content').forEach(content => {
+                if (content !== dropdownContent) {
+                    content.style.maxHeight = '0px';
+                    content.previousElementSibling.querySelector('.fas.fa-caret-right').style.transform = 'rotate(0deg)';
+                }
             });
+
+            // Alterna o dropdown atual
+            if (dropdownContent.style.maxHeight === '0px' || !dropdownContent.style.maxHeight) {
+                dropdownContent.style.maxHeight = dropdownContent.scrollHeight + 'px';
+                icon.style.transform = 'rotate(90deg)';
+            } else {
+                dropdownContent.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+    });
+
+    // Inicializa todos os dropdowns como fechados
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.dropdown-content').forEach(content => {
+            content.style.maxHeight = '0px';
         });
     });
 
@@ -191,7 +185,6 @@ function carousel() {
     });
 }
 
-// ...existing code...
 
 async function carregarReviewsFeaturable() {
     const url = "https://featurable.com/api/v1/widgets/8d7d9970-acc9-433b-80a5-b8599113eed9";
@@ -241,3 +234,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 wordCount();
 toggleDropdown();
+
+

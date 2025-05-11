@@ -41,17 +41,13 @@
     }
 }
 
-.dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out, transform 0.3s ease-in-out;
-    transform: translateY(-10px);
-}
-
-.dropdown-content.open {
-    max-height: 500px;
-    transform: translateY(0);
-}
+  .dropdown-content {
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .fas.fa-caret-right {
+        transition: transform 0.3s ease-out;
+    }
 
 #prevBtn:disabled,
 #nextBtn:disabled {
