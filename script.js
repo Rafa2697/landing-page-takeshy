@@ -142,15 +142,15 @@ function carousel() {
     function validateAndUpdateCarousel() {
         const totalItems = carouselInner.children.length;
         const maxIndex = Math.max(0, totalItems - visibleItems);
-        
+
         // Garante que o índice não ultrapasse o limite máximo
         currentIndex = Math.min(currentIndex, maxIndex);
-        
+
         // Atualiza a posição do carousel considerando os itens visíveis
         const percentage = (100 / totalItems) * currentIndex;
         carouselInner.style.transform = `translateX(-${percentage}%)`;
         carouselInner.style.width = `${100 * totalItems / visibleItems}%`;
-        
+
         // Ajusta a largura dos cards
         Array.from(carouselInner.children).forEach(card => {
             card.style.width = `${100 / totalItems}%`;
@@ -226,6 +226,15 @@ async function carregarReviewsFeaturable() {
 }
 
 document.addEventListener('DOMContentLoaded', carregarReviewsFeaturable);
+
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('fadeInElement');
+    // Pequeno atraso para garantir que o navegador processe o opacity-0 inicial antes de aplicar a transição
+    setTimeout(() => {
+        element.classList.remove('opacity-0');
+        element.classList.add('opacity-100');
+    }, 250); // Ajuste o atraso se necessário, ou remova se não for preciso.
+});
 
 
 wordCount();

@@ -2,6 +2,15 @@
     box-sizing: border-box;
 }
 
+
+
+
+
+.custom-offcanvas {
+    width: 200px;
+    /* Defina a largura desejada */
+}
+
 .typing-container {
     display: inline-block;
     min-width: 120px;
