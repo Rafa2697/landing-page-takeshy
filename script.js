@@ -37,7 +37,7 @@ function toggleDropdown() {
 
 
 function wordCount() {
-    const words = ["suspenso?", "bloqueado?"];
+    const words = ["hackeado?","suspenso?", "bloqueado?"];
     const typingText = document.getElementById("typing-text");
     let wordIndex = 0;
     let charIndex = 0;
