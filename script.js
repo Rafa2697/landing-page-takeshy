@@ -37,7 +37,7 @@ function toggleDropdown() {
 
 
 function wordCount() {
-    const words = ["hackeado?","suspenso?", "bloqueado?"];
+    const words = ["hackeado?", "suspenso?", "bloqueado?"];
     const typingText = document.getElementById("typing-text");
     let wordIndex = 0;
     let charIndex = 0;
@@ -187,7 +187,7 @@ function carousel() {
 
 
 async function carregarReviewsFeaturable() {
-    const url = "https://featurable.com/api/v1/widgets/8d7d9970-acc9-433b-80a5-b8599113eed9";
+    const url = "https://featurable.com/api/v1/widgets/c9a89677-551c-4fee-b8f5-084d33f9fd6a";
     try {
         const resp = await fetch(url);
         const data = await resp.json();
@@ -200,7 +200,8 @@ async function carregarReviewsFeaturable() {
                 const card = document.createElement('div');
                 card.innerHTML = `
                     <div class="bg-white text-black h-2/3 rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300">
-                        <div class="flex items-center mb-2">
+                        <div class="flex items-center mb-2 flex-wrap justify-center md:justify-start">
+                            <img src="${review.reviewer.profilePhotoUrl}" alt="Avatar" class="w-10 h-10 rounded-full mr-2">
                             <span class="font-bold">${review.reviewer.displayName}</span>
                             <span class="ml-2 text-yellow-400">
                                 ${'★'.repeat(review.starRating)}${'☆'.repeat(5 - review.starRating)}
