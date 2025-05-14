@@ -2,7 +2,21 @@
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    width: 1px;
+    /* Largura da barra */
+}
 
+::-webkit-scrollbar-thumb {
+    background:  #A5292A;
+    /* Cor do indicador */
+
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+    /* Cor da trilha */
+}
 
 
 

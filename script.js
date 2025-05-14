@@ -199,7 +199,7 @@ async function carregarReviewsFeaturable() {
             data.reviews.forEach(review => {
                 const card = document.createElement('div');
                 card.innerHTML = `
-                    <div class="bg-white text-black h-2/3 rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300">
+                    <div class="bg-white h-[250px] overflow-hidden text-black  rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300 scroll-auto">
                         <div class="flex items-center mb-2 flex-wrap justify-center md:justify-start">
                             <img src="${review.reviewer.profilePhotoUrl}" alt="Avatar" class="w-10 h-10 rounded-full mr-2">
                             <span class="font-bold">${review.reviewer.displayName}</span>
@@ -207,7 +207,9 @@ async function carregarReviewsFeaturable() {
                                 ${'★'.repeat(review.starRating)}${'☆'.repeat(5 - review.starRating)}
                             </span>
                         </div>
-                        <p class="text-sm mt-2 flex-1">${review.comment}</p>
+                        <div class="h-[180px] overflow-y-auto">
+            <p class="text-sm mt-2">${review.comment}</p>
+        </div>
                     </div>
                 `;
                 carouselInner.appendChild(card);
