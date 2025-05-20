@@ -191,12 +191,13 @@ async function carregarReviewsFeaturable() {
     try {
         const resp = await fetch(url);
         const data = await resp.json();
-        console.log(data);
+
         if (data.success && Array.isArray(data.reviews)) {
             const carouselInner = document.getElementById('carouselInner');
             carouselInner.innerHTML = ''; // Limpa os cartões existentes
 
             data.reviews.forEach(review => {
+                const originalComment = review.comment.split('(Translated by Google)')[0].trim();
                 const card = document.createElement('div');
                 card.innerHTML = `
                     <div class="bg-white h-[250px] overflow-hidden text-black  rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300 scroll-auto">
@@ -208,7 +209,7 @@ async function carregarReviewsFeaturable() {
                             </span>
                         </div>
                         <div class="h-[180px] overflow-y-auto">
-            <p class="text-sm mt-2">${review.comment}</p>
+            <p class="text-sm mt-2">${originalComment}</p>
         </div>
                     </div>
                 `;
