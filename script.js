@@ -197,7 +197,7 @@ async function carregarReviewsFeaturable() {
             carouselInner.innerHTML = ''; // Limpa os cartões existentes
 
             data.reviews.forEach(review => {
-                const originalComment = review.comment.split('(Translated by Google)')[0].trim();
+                const originalComment = (review.comment.split('(Original)')[1] || review.comment).trim();
                 const card = document.createElement('div');
                 card.innerHTML = `
                     <div class="bg-white h-[250px] overflow-hidden text-black  rounded-lg p-4 shadow mx-auto hover:shadow-lg hover:scale-105 transition-transform duration-300 scroll-auto">
